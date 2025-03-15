@@ -9,7 +9,7 @@ def search_town(town):
             for region in country["regions"]:
                 for settlement in region["settlements"]:
                     if settlement["title"] == town:
-                        return (f"Код города {settlement['title']}: {settlement['codes']['yandex_code']}")
+                        return (settlement['codes']['yandex_code'])
 
     if flag == 0:
         raise Exception(f"Город {town} не найден")
@@ -54,37 +54,37 @@ def search_stations(town_name):
 
         raise Exception(f"Город {town_name} не найден или у него нет станций.")
 
-print("Введите город:")
-town = input()
-search_town(town)
-search_stations(town)
+# print("Введите город:")
+# town = input()
+# search_town(town)
+# search_stations(town)
 
-print("Введите регион:")
-region_name = input()
-search_region(region_name)
+# print("Введите регион:")
+# region_name = input()
+# search_region(region_name)
 
-print("Введите страну:")
-country_name = input()
-search_country(country_name)
+# print("Введите страну:")
+# country_name = input()
+# search_country(country_name)
 
-api_key = 'bd6f2747-e243-49cb-9a42-ae77acdf9d8f'
+# api_key = 'bd6f2747-e243-49cb-9a42-ae77acdf9d8f'
 
-url = "https://api.rasp.yandex.net/v3.0/search/"
+# url = "https://api.rasp.yandex.net/v3.0/search/"
 
-params = {
-    'apikey': api_key,
-    'format': 'json',
-    'lang': 'ru_Ru',
-    'from': 'c146',
-    'to': 's9600213',
-    'date': '2025-03-15',
-    'limit': 10,
-}
+# params = {
+#     'apikey': api_key,
+#     'format': 'json',
+#     'lang': 'ru_Ru',
+#     'from': 'c146',
+#     'to': 's9600213',
+#     'date': '2025-03-15',
+#     'limit': 10,
+# }
 
-try:
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    data = response.json()
-    print(data)
-except requests.exceptions.RequestException as e:
-    print(f"Ошибка при запросе данных: {e}")
+# try:
+#     response = requests.get(url, params=params)
+#     response.raise_for_status()
+#     data = response.json()
+#     print(data)
+# except requests.exceptions.RequestException as e:
+#     print(f"Ошибка при запросе данных: {e}")
