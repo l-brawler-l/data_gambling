@@ -3,6 +3,8 @@ import requests
 import datetime
 import time
 
+from queue import Queue
+import heapq
 
 ### Обертки
 
@@ -15,8 +17,36 @@ def API_Search(req):
 
 ### Алгоритм
 
-def GetComplexThreads(start_city_code, end_city_code, date, mid_points : list[list] = []):
+# Высчитывает время, которое нужно на трансфер из одной станции в другую.
+# Пока просто заглушка, которая возврашает 1 час).
+def GetTransfetTime(station_from, station_to):
+    return datetime.timedelta(hours=1)
+
+
+# Принимает на вход названия начального и конечного города, дату и массив промежуточных точек.
+# Каждая промежуточная точка состоит из названия города и времени, которое планируется в этом городе провести.
+def GetComplexThreads(start_city_name : str, end_city_name : str, date : datetime.date, mid_points : list[list] = []):
+    start = search_town(start_city_name)
     
+    res_jsons = {}
+
+    max_value = date + datetime.date(1, 0, 0)
+
+    node_index = {}
+    node_index[start] = len(node_index)
+
+    parents = [-1]
+    time_distance = []
+    pr = [] #priority queue
+    heapq.heappush(pr, (date, start))
+    for point in mid_points:
+        next = search_town(point[0])
+        time_delta = point[1]
+        
+        res_jsons.append(CityToCity(start, next, ))
+        res_jsons
+
+
     
     return 0
 
@@ -38,13 +68,19 @@ def CityToCity(start_city_code : str, end_city_code : str, date : datetime.date)
 
 ### Дебаг
 
+def Test1():
+    start_city = "Москва"
+    end_city = "Санкт-Петербург"
+    mid_points = []
+    mid_points.append("Тверь", datetime.timedelta(days=1))
+
 if __name__ == '__main__':
     start = time.time()
 
     res_json = CityToCity("c213", "c2", datetime.date(2025, 4, 26))
     print(res_json["pagination"]["total"])
-    formatted_response = json.dumps(res_json, indent=2, ensure_ascii=False)
-    print(formatted_response)
+    for seg in res_json["segments"]:
+        print(seg["departure"], "-", seg["arrival"])
     # for segment in res_json["interval_segments"]:
     #     if segment["tickets_info"]["et_marker"]:
     #         print(segment["tickets_info"]["places"][0]["price"]["whole"])
