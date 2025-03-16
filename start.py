@@ -52,4 +52,8 @@ def search_stations(town_name):
                                 })
                             return stations_list
 
+<<<<<<< HEAD
         raise Exception(f"Город {town_name} не найден или у него нет станций.")
+=======
+        raise Exception(f"Город {town_name} не найден или у него нет станций.")
+>>>>>>> d3949b56ae2e7ddd9e7dfdb19f207cca134986fb
