@@ -53,8 +53,3 @@ def search_stations(town_name):
                             return stations_list
 
         raise Exception(f"Город {town_name} не найден или у него нет станций.")
-
-#     data = response.json()
-#     print(data)
-# except requests.exceptions.RequestException as e:
-#     print(f"Ошибка при запросе данных: {e}")
