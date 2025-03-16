@@ -7,12 +7,15 @@ from queue import Queue
 import heapq
 
 from start import search_town
-
-#=========================================================== Константы
+#===========================================================================================================
+# Константы
+#===========================================================================================================
 
 transport_types = ["plane", "train", "suburban", "bus", "water", "helicopter"]
 
-#=========================================================== Обертки
+#===========================================================================================================
+# Обертки
+#===========================================================================================================
 
 def API_Search(req):
     key = "bd6f2747-e243-49cb-9a42-ae77acdf9d8f"
@@ -20,7 +23,9 @@ def API_Search(req):
     response = requests.get(api_url, req)
     return response.json()
 
-#=========================================================== Алгоритм
+#===========================================================================================================
+# Алгоритм
+#===========================================================================================================
 
 class PQElement:
     def __init__(self, dt, base, segment):
@@ -34,6 +39,7 @@ class PQElement:
     def __lt__(self, other):
         return self.dt < other.dt
     
+
 class ComplexThreads:
     def __init__(self):
         self.req_jsons = {}
@@ -74,7 +80,6 @@ class ComplexThreads:
 
         ctc_res = CityToCity(start, next, date, transport)
         self.req_jsons.update({start: {date : ctc_res}})
-        
         
         for segment in self.req_jsons[start][date]:
             new_date = GetDateTime(segment["arrival"]) + next_time_delta
@@ -127,19 +132,17 @@ def GetDateTime(s : str):
     ans = datetime.datetime(year=d[0], month=d[1], day=d[2], hour=t[0], minute=t[1], second=t[2])
     return ans
 
-#============================================================================================================
+#===========================================================================================================
 # Высчитывает время, которое нужно на трансфер из одной станции в другую.
-#============================================================================================================
+#===========================================================================================================
 
 def GetTransfetTime(station_from, station_to):
     return datetime.timedelta(hours=1)
 
-#============================================================================================================
-#
+#===========================================================================================================
 # Принимает на вход названия начального и конечного города, дату и массив промежуточных точек.
 # Каждая промежуточная точка состоит из названия города и времени, которое планируется в этом городе провести.
-#
-#============================================================================================================
+#===========================================================================================================
 
 def CityToCity(start_city_code : str, end_city_code : str, date : datetime.date, transport : str):
     search_req = {
@@ -157,45 +160,3 @@ def CityToCity(start_city_code : str, end_city_code : str, date : datetime.date,
     if "error" in res_json:
         raise Exception(f"Невалидный API запрос.")
     return res_json["segments"]
-
-
-
-#================================================================================= Дебаг
-
-def PrintAns(ans):
-    print(len(ans))
-    for trace in ans:
-        print(len(trace))
-        for segment in trace:
-            formatted_response = json.dumps(segment, indent=2, ensure_ascii=False)
-            print(formatted_response)
-
-def Test0():
-    start_city = "Москва"
-    end_city = "Санкт-Петербург"
-    mid_points = []
-    date = datetime.date(2025, 4, 26)
-    struct = ComplexThreads()
-
-    ans = struct.GetComplexThreadsTimePrior(start_city, end_city, date, mid_points, 10)
-    PrintAns(ans)
-
-def Test1():
-    start_city = "Москва"
-    end_city = "Санкт-Петербург"
-    mid_points = []
-    mid_points.append(("Казань", datetime.timedelta(days=1)))
-    date = datetime.date(2025, 4, 26)
-    struct = ComplexThreads()
-
-    ans = struct.GetComplexThreadsTimePrior(start_city, end_city, date, mid_points, 10)
-    PrintAns(ans)
-
-
-if __name__ == '__main__':
-    start = time.time()
-
-    Test0()
-    
-    end = time.time() - start
-    print(f"Time: {end} sec.")
