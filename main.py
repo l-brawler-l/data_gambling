@@ -1,9 +1,10 @@
-import algo
-import creating_json_all_info
+import algo, creating_json_all_info, install_requirements
 
 if __name__ == '__main__':
     # Обновление json
     creating_json_all_info.fetch_stations()
+    # Установка зависимостей
+    install_requirements.install_requirements()
 
     start_city_name = input("Введите название начального города: ")
     end_city_name = input("Введите название конечного города: ")
