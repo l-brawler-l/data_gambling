@@ -21,7 +21,26 @@ if __name__ == '__main__':
     date = datetime.datetime(y, m, d)
 
     max_threads = int(input("Введите максимальное число предложенных маршрутов: "))
-    transport = input("Введите предпочитаемый вид транспорта латиницей, например \"plane\" (пустая строчка, если такового нет): ")
+    transport   = input("Введите предпочитаемый вид транспорта латиницей, например \"plane\" (пустая строчка, если такового нет): ")
+
+    match transport:
+        case 'самолет':
+            transport = 'plane'
+        case 'поезд':
+            transport = 'train'
+        case 'электричка':
+            transport = 'suburban'
+        case 'автобус':
+            transport = 'bus'
+        case 'морской транспорт':
+            transport = 'water'
+        case 'вертолет':
+            transport = 'helicopter'
+        case '\n':
+            transport = ''
+        case _:
+            print ("Неверный вид транспорта")
+            exit ()
 
     struct = ComplexThreads()
     ans    = struct.GetComplexThreadsTimePrior(start_city_name, end_city_name, date, mid_points, max_threads, transport)
