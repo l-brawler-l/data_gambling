@@ -8,10 +8,11 @@ import heapq
 
 from start import search_town
 
-### Константы
+#=========================================================== Константы
 
 transport_types = ["plane", "train", "suburban", "bus", "water", "helicopter"]
-### Обертки
+
+#=========================================================== Обертки
 
 def API_Search(req):
     key = "bd6f2747-e243-49cb-9a42-ae77acdf9d8f"
@@ -19,10 +20,7 @@ def API_Search(req):
     response = requests.get(api_url, req)
     return response.json()
 
-
-
-
-### Алгоритм
+#=========================================================== Алгоритм
 
 class PQElement:
     def __init__(self, dt, base, segment):
@@ -36,8 +34,6 @@ class PQElement:
     def __lt__(self, other):
         return self.dt < other.dt
     
-    
-
 class ComplexThreads:
     def __init__(self):
         self.req_jsons = {}
@@ -82,7 +78,7 @@ class ComplexThreads:
         
         for segment in self.req_jsons[start][date]:
             new_date = GetDateTime(segment["arrival"]) + next_time_delta
-            heapq.heappush(self.pr, PQElement(new_date, 0, segment)) #["thread"]["thread_method_link"]
+            heapq.heappush(self.pr, PQElement(new_date, 0, segment))
 
         for index in range(len(mid_points)):
             town = search_town(mid_points[index][0])
@@ -131,15 +127,19 @@ def GetDateTime(s : str):
     ans = datetime.datetime(year=d[0], month=d[1], day=d[2], hour=t[0], minute=t[1], second=t[2])
     return ans
 
+#============================================================================================================
 # Высчитывает время, которое нужно на трансфер из одной станции в другую.
-# Пока просто заглушка, которая возврашает 1 час).
+#============================================================================================================
+
 def GetTransfetTime(station_from, station_to):
     return datetime.timedelta(hours=1)
 
-
+#============================================================================================================
+#
 # Принимает на вход названия начального и конечного города, дату и массив промежуточных точек.
 # Каждая промежуточная точка состоит из названия города и времени, которое планируется в этом городе провести.
-
+#
+#============================================================================================================
 
 def CityToCity(start_city_code : str, end_city_code : str, date : datetime.date, transport : str):
     search_req = {
@@ -160,7 +160,7 @@ def CityToCity(start_city_code : str, end_city_code : str, date : datetime.date,
 
 
 
-### Дебаг
+#================================================================================= Дебаг
 
 def PrintAns(ans):
     print(len(ans))
@@ -199,6 +199,3 @@ if __name__ == '__main__':
     
     end = time.time() - start
     print(f"Time: {end} sec.")
-    # for res_json in res_jsons:
-    #     formatted_response = json.dumps(res_json, indent=2, ensure_ascii=False)
-    #     print(formatted_response)

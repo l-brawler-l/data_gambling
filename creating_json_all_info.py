@@ -18,5 +18,6 @@ try:
         json.dump(data, file, ensure_ascii=False, indent=4)
 
     print("Файл stations_list.json успешно сохранен.")
+    
 except requests.exceptions.RequestException as e:
     print(f"Ошибка при выполнении запроса: {e}")
