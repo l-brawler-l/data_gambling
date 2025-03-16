@@ -36,11 +36,8 @@ if __name__ == '__main__':
             transport = 'water'
         case 'вертолет':
             transport = 'helicopter'
-        case '\n':
-            transport = ''
         case _:
-            print ("Неверный вид транспорта")
-            exit ()
+            transport = ''
 
     struct = ComplexThreads()
     ans    = struct.GetComplexThreadsTimePrior(start_city_name, end_city_name, date, mid_points, max_threads, transport)
