@@ -69,7 +69,7 @@ class ComplexThreads:
     def GetComplexThreadsTimePrior(self, start_city_name : str, end_city_name : str, date : datetime.date,
                                 mid_points : list[list], max_thread_count, transport : str = ""):
         start = search_town(start_city_name)
-        end = search_town(end_city_name)
+        end   = search_town(end_city_name)
 
         if len(mid_points) == 0:
             next = end
@@ -87,6 +87,7 @@ class ComplexThreads:
 
         for index in range(len(mid_points)):
             town = search_town(mid_points[index][0])
+            
             for _ in range(max_thread_count):
 
                 pq_el = heapq.heappop(self.pr)
@@ -154,9 +155,13 @@ def CityToCity(start_city_code : str, end_city_code : str, date : datetime.date,
         "transfers" : True,
         "add_days_mask" : False,
     }
+
     if transport in transport_types:
         search_req["transport_types"] = transport
+
     res_json = API_Search(search_req)
+
     if "error" in res_json:
         raise Exception(f"Невалидный API запрос.")
+    
     return res_json["segments"]
