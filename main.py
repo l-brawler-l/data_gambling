@@ -7,9 +7,9 @@ if __name__ == '__main__':
     n = int(input("Введите количество промежуточных городов: "))
     mid_points = []
     for i in range(1, n + 1):
-        start_city_name = input(f"Введите название промежуточного города {i}: ")
+        city_name = input(f"Введите название промежуточного города {i}: ")
         time_delta = int(input("Введите количество дней, которые вы планируете в нем провести: "))
-        mid_points.append((start_city_name, datetime.timedelta(days=time_delta)))
+        mid_points.append((city_name, datetime.timedelta(days=time_delta)))
     print("Введите дату:")
     y = int(input("Введите год: "))
     m = int(input("Введите месяц: "))
