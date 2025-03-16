@@ -4,21 +4,21 @@ from algo import *
 if __name__ == '__main__':
     start_city_name = input("Введите название начального города: ")
     end_city_name = input("Введите название конечного города: ")
-    n = input("Введите количество промежуточных городов: ")
+    n = int(input("Введите количество промежуточных городов: "))
     mid_points = []
     for i in range(1, n + 1):
         start_city_name = input(f"Введите название промежуточного города {i}: ")
-        time_delta = input("Введите количество дней, которые вы планируете в нем провести: ")
+        time_delta = int(input("Введите количество дней, которые вы планируете в нем провести: "))
         mid_points.append((start_city_name, datetime.timedelta(days=time_delta)))
     print("Введите дату:")
-    y = input("Введите год: ")
-    m = input("Введите месяц: ")
-    d = input("Введите день: ")
-    date = datetime(y, m, d)
-    max_threads = input("Введите максимальное число предложенных маршрутов: ")
+    y = int(input("Введите год: "))
+    m = int(input("Введите месяц: "))
+    d = int(input("Введите день: "))
+    date = datetime.datetime(y, m, d)
+    max_threads = int(input("Введите максимальное число предложенных маршрутов: "))
     transport = input("Введите предпочитаемый вид транспорта латиницей, например \"plane\" (пустая строчка, если такового нет): ")
     struct = ComplexThreads()
-    ans = ComplexThreads.GetComplexThreadsTimePrior(start_city_name, end_city_name, date, mid_points, max_threads, transport)
+    ans = struct.GetComplexThreadsTimePrior(start_city_name, end_city_name, date, mid_points, max_threads, transport)
 
     print("Количество найденных маршрутов:", len(ans))
     for trace in ans:
