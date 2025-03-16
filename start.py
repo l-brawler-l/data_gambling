@@ -1,5 +1,5 @@
-import requests
 import json
+
 
 def search_town(town):
     flag = 0
@@ -14,6 +14,7 @@ def search_town(town):
     if flag == 0:
         raise Exception(f"Город {town} не найден")
 
+
 def search_region(region_name):
     flag = 0
     with open("stations_list.json", encoding="utf-8") as f:
@@ -25,6 +26,7 @@ def search_region(region_name):
     if flag == 0:
         raise Exception(f"Регион {region_name} не найден")
 
+
 def search_country(country_name):
     flag = 0
     with open("stations_list.json", encoding="utf-8") as f:
@@ -35,6 +37,7 @@ def search_country(country_name):
 
     if flag == 0:
         raise Exception(f"Страна {country_name} не найдена.")
+
 
 def search_stations(town_name):
     def search_stations(town_name):
